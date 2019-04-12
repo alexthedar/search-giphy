@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import GphApiClient from "giphy-js-sdk-core";
+import { Image, Col, Row } from "react-bootstrap";
+
+import { Layout } from "./hoc/Layout";
 
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 const client = GphApiClient(API_KEY);
@@ -46,20 +49,26 @@ class App extends Component {
 
   render() {
     const { gifs } = this.state;
+    console.log(gifs);
     return (
-      <div className="App">
+      <Layout>
         <input type="text" onChange={e => this.handleChange(e)} />
         <button type="submit" onClick={() => this.handleSubmit()}>
           Submit
         </button>
-        {gifs.map(gif => {
-          return (
-            <div key={gif.id}>
-              <img src={gif.images.fixed_width_downsampled.url} alt="" />
-            </div>
-          );
-        })}
-      </div>
+        <Row>
+          {gifs.map(gif => {
+            return (
+              <Image
+                key={gif.id}
+                src={gif.images.fixed_width_small_still.url}
+                alt=""
+                rounded
+              />
+            );
+          })}
+        </Row>
+      </Layout>
     );
   }
 }
