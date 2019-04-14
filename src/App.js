@@ -1,7 +1,17 @@
+/* eslint-disable */
 import React, { Component } from "react";
 import "./App.css";
 import GphApiClient from "giphy-js-sdk-core";
-import { Image, Col, Row } from "react-bootstrap";
+import {
+  Image,
+  Col,
+  Row,
+  Card,
+  CardColumns,
+  CardDeck,
+  CardGroup,
+  Jumbotron
+} from "react-bootstrap";
 
 import { Layout } from "./hoc/Layout";
 
@@ -14,9 +24,11 @@ class App extends Component {
 
     this.state = {
       gifs: [],
-      searchText: ""
+      searchText: "",
+      selected: null
     };
 
+    this.handleSelect = this.handleSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -47,27 +59,44 @@ class App extends Component {
     this.searchGifs(searchText);
   }
 
+  handleSelect(url) {
+    this.setState({
+      selected: url
+    });
+  }
+
   render() {
-    const { gifs } = this.state;
-    console.log(gifs);
+    const { gifs, selected } = this.state;
+    const selectImage = selected ? (
+      <Image style={{ display: "flex", margin: "auto", padding: '1rem' }} src={selected} fluid />
+    ) : null;
     return (
       <Layout>
-        <input type="text" onChange={e => this.handleChange(e)} />
-        <button type="submit" onClick={() => this.handleSubmit()}>
-          Submit
-        </button>
-        <Row>
+        <div>
+          <input type="text" onChange={e => this.handleChange(e)} />
+          <button type="submit" onClick={() => this.handleSubmit()}>
+            Submit
+          </button>
+        </div>
+        {selectImage}
+        <CardColumns>
           {gifs.map(gif => {
             return (
-              <Image
+              <Card
                 key={gif.id}
-                src={gif.images.fixed_width_small_still.url}
-                alt=""
-                rounded
-              />
+                border="light"
+                body={false}
+                onClick={() => this.handleSelect(gif.images.original.url)}
+              >
+                <Card.Img
+                  src={gif.images.fixed_height_downsampled.url}
+                  alt=""
+                  variant="top"
+                />
+              </Card>
             );
           })}
-        </Row>
+        </CardColumns>
       </Layout>
     );
   }
