@@ -1,105 +1,91 @@
 /* eslint-disable */
 import React, { Component } from "react";
+import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import "./App.css";
-import GphApiClient from "giphy-js-sdk-core";
-import {
-  Image,
-  Col,
-  Row,
-  Card,
-  CardColumns,
-  CardDeck,
-  CardGroup,
-  Jumbotron
-} from "react-bootstrap";
+import Layout from "./hoc/Layout";
+import * as actions from "./store/actions/index";
+import Home from "./containers/Home";
 
-import { Layout } from "./hoc/Layout";
-
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-const client = GphApiClient(API_KEY);
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      gifs: [],
-      searchText: "",
-      selected: null
-    };
-
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
   componentDidMount() {
-    this.searchGifs("cats");
-  }
-
-  searchGifs(text) {
-    client
-      .search("gifs", { q: text, lang: "en" })
-      .then(response => {
-        this.setState({
-          gifs: response.data
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-  handleChange(e) {
-    this.setState({
-      searchText: e.target.value
-    });
-  }
-
-  handleSubmit() {
-    const { searchText } = this.state;
-    this.searchGifs(searchText);
-  }
-
-  handleSelect(url) {
-    this.setState({
-      selected: url
-    });
+    const { giphyTrending } = this.props;
+    giphyTrending();
   }
 
   render() {
-    const { gifs, selected } = this.state;
-    const selectImage = selected ? (
-      <Image style={{ display: "flex", margin: "auto", padding: '1rem' }} src={selected} fluid />
-    ) : null;
+    // let routes = (
+    //   <Switch>
+    //     <Route path="/random" component={asyncStockDetail} />
+    //     <Route path="/trending" component={asyncStockDetail} />
+    //     <Route path="/search/:text" component={asyncStockDetail} />
+    //     <Route exact path="/" component={Home} />
+    //     <Redirect to="/" to="trending" />
+    //   </Switch>
+    // );
+
     return (
       <Layout>
-        <div>
-          <input type="text" onChange={e => this.handleChange(e)} />
-          <button type="submit" onClick={() => this.handleSubmit()}>
-            Submit
-          </button>
-        </div>
-        {selectImage}
-        <CardColumns>
-          {gifs.map(gif => {
-            return (
-              <Card
-                key={gif.id}
-                border="light"
-                body={false}
-                onClick={() => this.handleSelect(gif.images.original.url)}
-              >
-                <Card.Img
-                  src={gif.images.fixed_height_downsampled.url}
-                  alt=""
-                  variant="top"
-                />
-              </Card>
-            );
-          })}
-        </CardColumns>
+        <Home />
       </Layout>
     );
   }
 }
+const mapDispatchToProps = dispatch => {
+  return {
+    giphyTrending: text => dispatch(actions.getGiphyTrending(text))
+  };
+};
 
-export default App;
+export default connect(
+  null,
+  mapDispatchToProps
+)(App);
+
+// export default App;
+
+// /* eslint-disable */
+// import React, { Component } from "react";
+// import { Route, Switch, withRouter, Redirect } from "react-router-dom";
+// import { connect } from "react-redux";
+// import Layout from "./hoc/Layout";
+// import asyncComponent from "./hoc/asyncComponent";
+// import MarketTable from "./containers/market";
+// import * as actions from "./store/actions/index";
+
+// const asyncStockDetail = asyncComponent(() => {
+//   return import("./containers/stock-detail");
+// });
+
+// class App extends Component {
+//   componentDidMount() {
+//     const { getRefSymbols } = this.props;
+//     getRefSymbols();
+//   }
+//   render() {
+//     let routes = (
+//       <Switch>
+//         <Route path="/stock/:symbol" component={asyncStockDetail} />
+//         <Route exact path="/" component={MarketTable} />
+//         <Redirect to="/" />
+//       </Switch>
+//     );
+
+//     return (
+//       <div>
+//         <Layout>{routes}</Layout>
+//       </div>
+//     );
+//   }
+// }
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     getRefSymbols: () => dispatch(actions.getRefSymbols())
+//   };
+// };
+
+// export default connect(
+//   null,
+//   mapDispatchToProps
+// )(withRouter(App));
