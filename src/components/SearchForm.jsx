@@ -35,12 +35,25 @@ class SearchForm extends Component {
   }
 
   handleToggle(value) {
-    const { setType } = this.props;
+    const {
+      setType,
+      giphyType,
+      match: {
+        params: { searchText, type }
+      },
+      history
+    } = this.props;
     setType(value);
+    console.log(this.props);
+    console.log(searchText, giphyType, type);
+    let url = `/search/${giphyType}`;
+    url = searchText ? url + `${searchText}` : url;
+    history.push(url);
   }
 
   render() {
     const { searchText } = this.state;
+    const { giphyType } = this.props;
     return (
       <React.Fragment>
         <Nav className="mr-auto " />
@@ -48,7 +61,7 @@ class SearchForm extends Component {
           <ToggleButtonGroup
             type="radio"
             name="types"
-            value={this.state.value}
+            value={giphyType}
             onChange={this.handleToggle}
           >
             <ToggleButton

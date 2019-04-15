@@ -20,7 +20,7 @@ class App extends Component {
         <Route path="/trending/:type" component={Home} />
         <Route path="/search/:type/:searchText" component={Home} />
         {/* <Route exact path="/" component={Home} /> */}
-        <Redirect from="/" to="/trending/gifs" />
+        <Redirect from="/" push to="/trending/gifs" />
       </Switch>
     );
 
