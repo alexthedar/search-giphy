@@ -25,6 +25,7 @@ export class Home extends Component {
 
   handleHide() {
     this.setState({
+      selected: "",
       modalShow: false
     });
   }
@@ -54,7 +55,7 @@ export class Home extends Component {
                 onClick={() => this.handleSelect(gif.images.original.url)}
               >
                 <Card.Img
-                  src={gif.images.fixed_height_still.url} //fixed_height_downsampled
+                  src={gif.images.fixed_height_downsampled.url} // can't decide between still ro downsampled fixed_height_still
                   alt=""
                   variant="top"
                 />

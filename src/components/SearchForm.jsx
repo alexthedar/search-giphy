@@ -9,6 +9,7 @@ import {
   ToggleButton
 } from "react-bootstrap";
 import * as actions from "../store/actions/index";
+
 export const SearchForm = ({
   giphySearch,
   setSearchText,
@@ -16,6 +17,7 @@ export const SearchForm = ({
   giphyType,
   searchText
 }) => {
+
   const handleSubmit = e => {
     e.preventDefault();
     giphySearch(searchText, giphyType);
@@ -28,6 +30,7 @@ export const SearchForm = ({
       giphyTrending(value);
     }
   };
+
   return (
     <React.Fragment>
       <Nav className="mr-auto " />
