@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import searchReducer, { initialState } from "../searchReducer";
+import giphyReducer, { initialState } from "../giphyReducer";
 import * as actions from "../../actions/index";
 
 describe("search reducer", () => {
@@ -8,14 +8,14 @@ describe("search reducer", () => {
   let expectedResult;
 
   it("should return the initial state", () => {
-    expect(searchReducer(undefined, {})).to.deep.equal({
+    expect(giphyReducer(undefined, {})).to.deep.equal({
       gifsArray: []
     });
   });
 
   it("should react to SET_REF_SYMBOLS", () => {
     action = actions.setGiphySearch(["test"]);
-    actualResult = searchReducer(initialState, action);
+    actualResult = giphyReducer(initialState, action);
     expectedResult = {
       ...initialState,
       gifsArray: ["test"]

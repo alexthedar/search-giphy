@@ -3,6 +3,6 @@ export {
   getGiphySearch,
   setGiphyTrending,
   getGiphyTrending
-} from "./searchActions";
+} from "./giphyActions";
 
 export { setLoading, setError } from "./appActions";

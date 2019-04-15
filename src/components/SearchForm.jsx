@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import { Button, Form, FormControl } from "react-bootstrap";
 import * as actions from "../store/actions/index";
 
@@ -18,9 +20,10 @@ class SearchForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { giphySearch } = this.props;
+    const { giphySearch, history } = this.props;
     const { searchText } = this.state;
     giphySearch(searchText);
+    history.push(`/search/${searchText}`);
   }
 
   render() {
@@ -53,7 +56,10 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  null,
-  mapDispatchToProps
+export default compose(
+  withRouter,
+  connect(
+    null,
+    mapDispatchToProps
+  )
 )(SearchForm);

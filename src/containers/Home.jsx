@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { compose } from "redux";
 import SelectImage from "../components/SelectImage";
 import { Card, CardColumns } from "react-bootstrap";
-import * as actions from "../store/actions/index";
 
 export class Home extends Component {
   constructor(props) {
@@ -31,7 +32,13 @@ export class Home extends Component {
   }
 
   render() {
-    const { gifsArray } = this.props;
+    const {
+      searchArray,
+      trendingArray,
+      match: {
+        params: { searchText }
+      },
+    } = this.props;
     const { selected, modalShow } = this.state;
 
     const selectImage = selected ? (
@@ -42,11 +49,16 @@ export class Home extends Component {
       />
     ) : null;
 
+    let itemsArr = trendingArray;
+    if (searchText) {
+      itemsArr = searchArray
+    }
+
     return (
       <React.Fragment>
         {selectImage}
         <CardColumns>
-          {gifsArray.map(gif => {
+          {itemsArr.map(gif => {
             return (
               <Card
                 key={gif.id}
@@ -68,19 +80,12 @@ export class Home extends Component {
   }
 }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     handleSelect: url => actions.selectGif(url)
-//   };
-// };
-
 export function mapStateToProps(state) {
-  const { gifsArray } = state.search;
-  return { gifsArray };
+  const { searchArray, trendingArray } = state.giphy;
+  return { searchArray, trendingArray };
 }
 
-export default connect(
-  mapStateToProps,
-  null
-  // mapDispatchToProps
+export default compose(
+  withRouter,
+  connect(mapStateToProps)
 )(Home);

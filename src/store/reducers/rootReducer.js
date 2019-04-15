@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import search from "./searchReducer";
+import giphy from "./giphyReducer";
 import app from "./appReducer";
 
-const rootReducer = combineReducers({ search, app });
+const rootReducer = combineReducers({ giphy, app });
 
 export default rootReducer;

@@ -5,17 +5,16 @@ import SearchForm from "../components/SearchForm";
 
 const generateAppContents = props => {
   const { error, loading } = props;
-  console.log(props);
   if (error) {
     return (
       <Alert variant="danger">
-        <Alert.Heading >Oh snap! You got an error!</Alert.Heading>
-        {/* {error.message ? (
+        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+        {error.message ? (
           <p>
             <strong>Error Message: </strong>
             {error}
           </p>
-        ) : null} */}
+        ) : null}
 
         <p>Please try refreshing the page.</p>
       </Alert>
@@ -38,7 +37,6 @@ const generateAppContents = props => {
       </div>
     );
   }
-
   return props.children;
 };
 
@@ -58,9 +56,6 @@ export const Layout = props => {
             <Nav.Link eventKey="trending" href="/trending">
               Trending
             </Nav.Link>
-            <Nav.Link eventKey="random" href="/random">
-              Random
-            </Nav.Link>
           </Nav>
           <Nav>
             <SearchForm />
@@ -76,7 +71,6 @@ export const Layout = props => {
 
 export function mapStateToProps(state) {
   const { error, loading } = state.app;
-  console.log(state);
   return { error, loading };
 }
 

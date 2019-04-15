@@ -14,7 +14,7 @@ const store = mockStore({
 const error = { message: "error" };
 jest.mock("../../../api/get-giphy");
 
-describe("marketActions creators", () => {
+describe("giphyActions creators", () => {
   let expectedResult;
   let actualResult;
 
