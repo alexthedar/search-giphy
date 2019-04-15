@@ -2,22 +2,22 @@ import * as constants from "../constants";
 import { updateObject } from "../shared-utils";
 
 export const initialState = {
-  searchArray: [],
-  trendingArray: []
+  itemsArray: [],
+  giphyType: ""
 };
 
-const setTrendingArray = (state, action) =>
-  updateObject(state, { trendingArray: action.trendingArray });
+const setGiphyType = (state, action) =>
+  updateObject(state, { giphyType: action.giphyType });
 
-const setSearchArray = (state, action) =>
-  updateObject(state, { searchArray: action.searchArray });
+const setItemsArray = (state, action) =>
+  updateObject(state, { itemsArray: action.itemsArray });
 
 const giphyReducer = (state = initialState, action) => {
   switch (action.type) {
-    case constants.SET_TRENDING_RESULTS:
-      return setTrendingArray(state, action);
-    case constants.SET_SEARCH_RESULTS:
-      return setSearchArray(state, action);
+    case constants.SET_GIPHY_TYPE:
+      return setGiphyType(state, action);
+    case constants.SET_RESULT_ITEMS:
+      return setItemsArray(state, action);
     default:
       return state;
   }

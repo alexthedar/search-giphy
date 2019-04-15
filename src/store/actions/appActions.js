@@ -7,10 +7,9 @@ export const setLoading = loading => {
   };
 };
 
-export const setError = (error) => {
+export const setError = error => {
   return {
     type: constants.SET_ERROR,
     error
   };
-}
-
+};

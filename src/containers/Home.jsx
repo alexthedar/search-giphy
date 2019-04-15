@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import SelectImage from "../components/SelectImage";
 import { Card, CardColumns } from "react-bootstrap";
 
@@ -32,13 +30,7 @@ export class Home extends Component {
   }
 
   render() {
-    const {
-      searchArray,
-      trendingArray,
-      match: {
-        params: { searchText }
-      },
-    } = this.props;
+    const { itemsArray } = this.props;
     const { selected, modalShow } = this.state;
 
     const selectImage = selected ? (
@@ -49,16 +41,11 @@ export class Home extends Component {
       />
     ) : null;
 
-    let itemsArr = trendingArray;
-    if (searchText) {
-      itemsArr = searchArray
-    }
-
     return (
       <React.Fragment>
         {selectImage}
         <CardColumns>
-          {itemsArr.map(gif => {
+          {itemsArray.map(gif => {
             return (
               <Card
                 key={gif.id}
@@ -81,11 +68,8 @@ export class Home extends Component {
 }
 
 export function mapStateToProps(state) {
-  const { searchArray, trendingArray } = state.giphy;
-  return { searchArray, trendingArray };
+  const { itemsArray } = state.giphy;
+  return { itemsArray };
 }
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(Home);
+export default connect(mapStateToProps)(Home);

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Navbar, Container, Nav, Spinner, Alert } from "react-bootstrap";
+import { Navbar, Container, Spinner, Alert } from "react-bootstrap";
 import SearchForm from "../components/SearchForm";
 
 const generateAppContents = props => {
@@ -50,16 +50,10 @@ export const Layout = props => {
         variant="dark"
         sticky="top"
       >
+        <Navbar.Brand href="/trending/gifs">HOME</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="mr-auto " activeKey="random">
-            <Nav.Link eventKey="trending" href="/trending">
-              Trending
-            </Nav.Link>
-          </Nav>
-          <Nav>
-            <SearchForm />
-          </Nav>
+          <SearchForm />
         </Navbar.Collapse>
       </Navbar>
       <main style={{ paddingTop: "1.5rem", marginBottom: "1.5rem" }}>

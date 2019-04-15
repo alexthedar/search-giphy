@@ -1,7 +1,7 @@
 export {
-  setGiphySearch,
+  setGiphyType,
+  setitemsArray,
   getGiphySearch,
-  setGiphyTrending,
   getGiphyTrending
 } from "./giphyActions";
 

@@ -2,30 +2,30 @@ import * as constants from "../constants";
 import * as actions from "./index";
 import * as giphy from "../../api/get-giphy";
 
-export const setGiphySearch = searchArray => {
+export const setitemsArray = itemsArray => {
   return {
-    type: constants.SET_SEARCH_RESULTS,
-    searchArray
+    type: constants.SET_RESULT_ITEMS,
+    itemsArray
   };
 };
 
-export const getGiphySearch = searchText => {
+export const setGiphyType = giphyType => {
+  return {
+    type: constants.SET_GIPHY_TYPE,
+    giphyType
+  };
+};
+
+export const getGiphySearch = (searchText, giphyType) => {
   return dispatch =>
-    Promise.resolve(giphy.getGiphySearch(searchText))
-      .then(res => dispatch(setGiphySearch(res)))
+    Promise.resolve(giphy.getGiphySearch(searchText, giphyType))
+      .then(res => dispatch(setitemsArray(res)))
       .catch(error => dispatch(actions.setError(error)));
 };
 
-export const setGiphyTrending = trendingArray => {
-  return {
-    type: constants.SET_TRENDING_RESULTS,
-    trendingArray
-  };
-};
-
-export const getGiphyTrending = () => {
+export const getGiphyTrending = giphyType => {
   return dispatch =>
-    Promise.resolve(giphy.getGiphyTrending())
-      .then(res => dispatch(setGiphyTrending(res)))
+    Promise.resolve(giphy.getGiphyTrending(giphyType))
+      .then(res => dispatch(setitemsArray(res)))
       .catch(error => dispatch(actions.setError(error)));
 };

@@ -9,31 +9,18 @@ import Home from "./containers/Home";
 
 class App extends Component {
   componentDidMount() {
-    const { giphyTrending, giphySearch } = this.props;
+    const { giphyTrending } = this.props;
     giphyTrending();
-    giphySearch();
-  }
-
-  componentDidUpdate(prevProp) {
-    const {
-      location: { pathname }
-    } = this.props;
-    if (pathname !== prevProp.location.pathname) {
-      console.log("here");
-    }
-    console.log(pathname);
-    console.log(this.props);
-    console.log(prevProp);
   }
 
   render() {
     let routes = (
       <Switch>
-        {/* <Route path="stickers" component={Home} />
-        <Route path="stickers/search/:searchText" component={Home} /> */}
-        <Route path="gifs" component={Home} />
-        <Route path="gifs/search/:searchText" component={Home} />
-        <Route exact path="/" component={Home} />
+
+        <Route path="/trending/:type" component={Home} />
+        <Route path="/search/:type/:searchText" component={Home} />
+        {/* <Route exact path="/" component={Home} /> */}
+        <Redirect from="/" to="/trending/gifs" />
       </Switch>
     );
 
