@@ -25,19 +25,34 @@ export const setSearchText = searchText => {
 
 export const getGiphySearch = (searchText, giphyType) => {
   return dispatch => {
-    dispatch(setSearchText(searchText));
-    dispatch(setGiphyType(giphyType));
+    dispatch(actions.setLoading(true));
     return Promise.resolve(giphy.getGiphySearch(searchText, giphyType))
-      .then(res => dispatch(setitemsArray(res)))
-      .catch(error => dispatch(actions.setError(error)));
+      .then(res => {
+        dispatch(setSearchText(searchText));
+        dispatch(setGiphyType(giphyType));
+        dispatch(setitemsArray(res));
+        return dispatch(actions.setLoading(false));
+      })
+      .catch(error => {
+        dispatch(actions.setError(error));
+        return dispatch(actions.setLoading(false));
+      });
   };
 };
 
 export const getGiphyTrending = giphyType => {
   return dispatch => {
-    dispatch(setGiphyType(giphyType));
+    dispatch(actions.setLoading(true));
     return Promise.resolve(giphy.getGiphyTrending(giphyType))
-      .then(res => dispatch(setitemsArray(res)))
-      .catch(error => dispatch(actions.setError(error)));
+      .then(res => {
+        dispatch(setSearchText(""));
+        dispatch(setGiphyType(giphyType));
+        dispatch(setitemsArray(res));
+        return dispatch(actions.setLoading(false));
+      })
+      .catch(error => {
+        dispatch(actions.setError(error));
+        return dispatch(actions.setLoading(false));
+      });
   };
 };

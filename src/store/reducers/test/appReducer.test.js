@@ -9,7 +9,7 @@ describe("search reducer", () => {
 
   it("should return the initial state", () => {
     expect(appReducer(undefined, {})).to.deep.equal({
-      error: "",
+      error: null,
       loading: false
     });
   });
