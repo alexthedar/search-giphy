@@ -12,6 +12,9 @@ export default {
         id: "test2",
         slug: "funny-cat-test1",
         images: {
+          fixed_height_downsampled: {
+            url: "http://media2.giphy.com/media/test1/200.gif"
+          },
           fixed_height_still: {
             url: "http://media2.giphy.com/media/test1/200.gif"
           },
@@ -26,6 +29,9 @@ export default {
         id: "test2",
         slug: "funny-cat-test2",
         images: {
+          fixed_height_downsampled: {
+            url: "http://media2.giphy.com/media/test2/200.gif"
+          },
           fixed_height_still: {
             url: "http://media2.giphy.com/media/test2/200.gif"
           },

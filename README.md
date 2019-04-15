@@ -3,7 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ### To Run:
 
 ```
-git clone https://github.com/alexthedar/
+git clone https://github.com/alexthedar/search-giphy.git
 cd search-giphy
 yarn start
 ```
@@ -41,3 +41,5 @@ yarn test
 - implement language support
 - allow user choice of images/animations
 - show user meta data of fig/sticker
+- integration tests and more unit tests
+
