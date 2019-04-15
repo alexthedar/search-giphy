@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { compose } from "redux";
 import {
   Nav,
   Button,
@@ -28,27 +26,20 @@ class SearchForm extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const { giphySearch, history, giphyType } = this.props;
+    // const { giphySearch, history, giphyType } = this.props;
+    const { giphySearch, giphyType } = this.props;
     const { searchText } = this.state;
     giphySearch(searchText, giphyType);
-    history.push(`/search/${giphyType}/${searchText}`);
+    // history.push(`/search/${giphyType}/${searchText}`);
   }
 
   handleToggle(value) {
-    const {
-      setType,
-      giphyType,
-      match: {
-        params: { searchText, type }
-      },
-      history
-    } = this.props;
-    setType(value);
-    console.log(this.props);
-    console.log(searchText, giphyType, type);
-    let url = `/search/${giphyType}`;
-    url = searchText ? url + `${searchText}` : url;
-    history.push(url);
+    const { searchText, giphySearch, giphyTrending } = this.props;
+    if (searchText) {
+      giphySearch(searchText, value);
+    } else {
+      giphyTrending(value);
+    }
   }
 
   render() {
@@ -106,20 +97,19 @@ class SearchForm extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    giphySearch: text => dispatch(actions.getGiphySearch(text)),
-    setType: giphyType => dispatch(actions.setGiphyType(giphyType))
+    giphySearch: (text, type) => dispatch(actions.getGiphySearch(text, type)),
+    setType: giphyType => dispatch(actions.setGiphyType(giphyType)),
+    setSearchText: searchText => dispatch(actions.setSearchText(searchText)),
+    giphyTrending: type => dispatch(actions.getGiphyTrending(type))
   };
 };
 
 export function mapStateToProps(state) {
-  const { giphyType } = state.giphy;
-  return { giphyType };
+  const { giphyType, searchText } = state.giphy;
+  return { giphyType, searchText };
 }
 
-export default compose(
-  withRouter,
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(SearchForm);

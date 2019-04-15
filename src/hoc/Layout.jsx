@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Navbar, Container, Spinner, Alert } from "react-bootstrap";
 import SearchForm from "../components/SearchForm";
+import * as actions from "../store/actions/index";
 
 const generateAppContents = props => {
   const { error, loading } = props;
@@ -41,6 +42,12 @@ const generateAppContents = props => {
 };
 
 export const Layout = props => {
+  function handleClick(e) {
+    e.preventDefault();
+    const { giphyTrending, giphyType } = props;
+    giphyTrending(giphyType);
+  }
+
   return (
     <div>
       <Navbar
@@ -50,7 +57,7 @@ export const Layout = props => {
         variant="dark"
         sticky="top"
       >
-        <Navbar.Brand href="/trending/gifs">HOME</Navbar.Brand>
+        <Navbar.Brand onClick={e => handleClick(e)}>Trending</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <SearchForm />
@@ -63,12 +70,20 @@ export const Layout = props => {
   );
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    giphyTrending: type => dispatch(actions.getGiphyTrending(type))
+  };
+};
+
 export function mapStateToProps(state) {
   const { error, loading } = state.app;
-  return { error, loading };
+
+  const { giphyType } = state.giphy;
+  return { giphyType, error, loading };
 }
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(Layout);
